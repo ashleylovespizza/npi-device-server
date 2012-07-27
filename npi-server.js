@@ -6,6 +6,8 @@ var http = require ('http'),
 
 //var NPIListener = require('./lib/npilistener');
 
+var port = process.env.PORT || 8000;
+
 var server = http.createServer(function(request, response) {
 	var file = new nodeStatic.Server('./public', {
 		cache: false
@@ -28,4 +30,7 @@ var server = http.createServer(function(request, response) {
 	})
 });
 
-server.listen(8000);
+server.listen(port, function(){
+	
+  console.log("Listening on " + port);
+});
