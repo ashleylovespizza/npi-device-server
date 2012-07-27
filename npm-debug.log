@@ -1,0 +1,73 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'node', '/usr/local/bin/npm', 'install' ]
+2 info using npm@1.1.45
+3 info using node@v0.8.4
+4 verbose config file /Users/aholtgraver/.npmrc
+5 verbose config file /usr/local/etc/npmrc
+6 verbose config file /usr/local/lib/node_modules/npm/npmrc
+7 verbose read json /Users/aholtgraver/Projects/NPI Device/npi-device-server/package.json
+8 verbose readDependencies using package.json deps
+9 verbose install where, deps [ '/Users/aholtgraver/Projects/NPI Device/npi-device-server',
+9 verbose install   [ 'node-static' ] ]
+10 verbose from cache /Users/aholtgraver/Projects/NPI Device/npi-device-server/package.json
+11 info preinstall npi-server@0.0.1
+12 verbose read json /Users/aholtgraver/Projects/NPI Device/npi-device-server/node_modules/node-static/package.json
+13 verbose from cache /Users/aholtgraver/Projects/NPI Device/npi-device-server/package.json
+14 verbose readDependencies using package.json deps
+15 verbose from cache /Users/aholtgraver/Projects/NPI Device/npi-device-server/node_modules/node-static/package.json
+16 verbose cache add [ 'node-static@0.5.9', null ]
+17 silly cache add name=undefined spec="node-static@0.5.9" args=["node-static@0.5.9",null]
+18 verbose parsed url { pathname: 'node-static@0.5.9',
+18 verbose parsed url   path: 'node-static@0.5.9',
+18 verbose parsed url   href: 'node-static@0.5.9' }
+19 silly cache add name="node-static" spec="0.5.9" args=["node-static","0.5.9"]
+20 verbose parsed url { pathname: '0.5.9', path: '0.5.9', href: '0.5.9' }
+21 verbose addNamed [ 'node-static', '0.5.9' ]
+22 verbose addNamed [ '0.5.9', '0.5.9' ]
+23 silly lockFile ca49ab61-node-static-0-5-9 node-static@0.5.9
+24 verbose lock node-static@0.5.9 /Users/aholtgraver/.npm/ca49ab61-node-static-0-5-9.lock
+25 verbose url raw node-static/0.5.9
+26 verbose url resolving [ 'https://registry.npmjs.org/', './node-static/0.5.9' ]
+27 verbose url resolved https://registry.npmjs.org/node-static/0.5.9
+28 info retry registry request attempt 1 at 22:39:48
+29 verbose etag "77PWNIY5W3S10KZLBSNBM2HM5"
+30 http GET https://registry.npmjs.org/node-static/0.5.9
+31 http 304 https://registry.npmjs.org/node-static/0.5.9
+32 silly registry.get cb [ 304,
+32 silly registry.get   { server: 'CouchDB/1.2.0 (Erlang OTP/R15B)',
+32 silly registry.get     etag: '"77PWNIY5W3S10KZLBSNBM2HM5"',
+32 silly registry.get     date: 'Fri, 27 Jul 2012 02:39:49 GMT',
+32 silly registry.get     'content-length': '0' } ]
+33 verbose etag node-static/0.5.9 from cache
+34 verbose read json /Users/aholtgraver/.npm/node-static/0.5.9/package/package.json
+35 silly lockFile ca49ab61-node-static-0-5-9 node-static@0.5.9
+36 silly resolved [ { name: 'node-static',
+36 silly resolved     description: 'simple, compliant file streaming module for node',
+36 silly resolved     url: 'http://github.com/cloudhead/node-static',
+36 silly resolved     keywords: [ 'http', 'static', 'file', 'server' ],
+36 silly resolved     author: { name: 'Alexis Sellier', email: 'self@cloudhead.net' },
+36 silly resolved     contributors: [],
+36 silly resolved     licenses: [ 'MIT' ],
+36 silly resolved     dependencies: {},
+36 silly resolved     lib: 'lib',
+36 silly resolved     main: './lib/node-static',
+36 silly resolved     version: '0.5.9',
+36 silly resolved     directories: { test: './test' },
+36 silly resolved     engines: { node: '>= 0.4.1' },
+36 silly resolved     readme: 'node-static\n===========\n\n> a simple, *rfc 2616 compliant* file streaming module for [node](http://nodejs.org)\n\nnode-static has an in-memory file cache, making it highly efficient.\nnode-static understands and supports *conditional GET* and *HEAD* requests.\nnode-static was inspired by some of the other static-file serving modules out there,\nsuch as node-paperboy and antinode.\n\nsynopsis\n--------\n\n    var static = require(\'node-static\');\n\n    //\n    // Create a node-static server instance to serve the \'./public\' folder\n    //\n    var file = new(static.Server)(\'./public\');\n\n    require(\'http\').createServer(function (request, response) {\n        request.addListener(\'end\', function () {\n            //\n            // Serve files!\n            //\n            file.serve(request, response);\n        });\n    }).listen(8080);\n\nAPI\n---\n\n### Creating a node-static Server #\n\nCreating a file server instance is as simple as:\n\n    new static.Server();\n\nThis will serve files in the current directory. If you want to serve files in a specific\ndirectory, pass it as the first argument:\n\n    new static.Server(\'./public\');\n\nYou can also specify how long the client is supposed to cache the files node-static serves:\n\n    new static.Server(\'./public\', { cache: 3600 });\n\nThis will set the `Cache-Control` header, telling clients to cache the file for an hour.\nThis is the default setting.\n\n### Serving files under a directory #\n\nTo serve files under a directory, simply call the `serve` method on a `Server` instance, passing it\nthe HTTP request and response object:\n\n    var fileServer = new static.Server(\'./public\');\n\n    require(\'http\').createServer(function (request, response) {\n        request.addListener(\'end\', function () {\n            fileServer.serve(request, response);\n        });\n    }).listen(8080);\n\n### Serving specific files #\n\nIf you want to serve a specific file, like an error page for example, use the `serveFile` method:\n\n    fileServer.serveFile(\'/error.html\', 500, {}, request, response);\n\nThis will serve the `error.html` file, from under the file root directory, with a `500` status code.\nFor example, you could serve an error page, when the initial request wasn\'t found:\n\n    require(\'http\').createServer(function (request, response) {\n        request.addListener(\'end\', function () {\n            fileServer.serve(request, response, function (e, res) {\n                if (e && (e.status === 404)) { // If the file wasn\'t found\n                    fileServer.serveFile(\'/not-found.html\', request, response);\n                }\n            });\n        });\n    }).listen(8080);\n\nMore on intercepting errors bellow.\n\n### Intercepting errors & Listening #\n\nAn optional callback can be passed as last argument, it will be called every time a file\nhas been served successfully, or if there was an error serving the file:\n\n    var fileServer = new static.Server(\'./public\');\n\n    require(\'http\').createServer(function (request, response) {\n        request.addListener(\'end\', function () {\n            fileServer.serve(request, response, function (err, result) {\n                if (err) { // There was an error serving the file\n                    sys.error("Error serving " + request.url + " - " + err.message);\n\n                    // Respond to the client\n                    response.writeHead(err.status, err.headers);\n                    response.end();\n                }\n            });\n        });\n    }).listen(8080);\n\nNote that if you pass a callback, and there is an error serving the file, node-static\n*will not* respond to the client. This gives you the opportunity to re-route the request,\nor handle it differently.\n\nFor example, you may want to interpret a request as a static request, but if the file isn\'t found,\nsend it to an application.\n\nIf you only want to *listen* for errors, you can use *event listeners*:\n\n    fileServer.serve(request, response).addListener(\'error\', function (err) {\n        sys.error("Error serving " + request.url + " - " + err.message);\n    });\n\nWith this method, you don\'t have to explicitly send the response back, in case of an error.\n\n### Options when creating an instance of `Server` #\n\n#### `cache` #\n\nSets the `Cache-Control` header.\n\nexample: `{ cache: 7200 }`\n\nPassing a number will set the cache duration to that number of seconds.\nPassing `false` will disable the `Cache-Control` header.\n\n> Defaults to `3600`\n\n#### `headers` #\n\nSets response headers.\n\nexample: `{ \'X-Hello\': \'World!\' }`\n\n> defaults to `{}`\n\n',
+36 silly resolved     _id: 'node-static@0.5.9',
+36 silly resolved     _from: 'node-static@0.5.9' } ]
+37 info install node-static@0.5.9 into /Users/aholtgraver/Projects/NPI Device/npi-device-server
+38 info installOne node-static@0.5.9
+39 error git Appears to be a git repo or submodule.
+39 error git     /Users/aholtgraver/Projects/NPI Device/npi-device-server/node_modules/node-static
+39 error git Refusing to remove it. Update manually,
+39 error git or move it out of the way first.
+40 error System Darwin 11.3.0
+41 error command "node" "/usr/local/bin/npm" "install"
+42 error cwd /Users/aholtgraver/Projects/NPI Device/npi-device-server
+43 error node -v v0.8.4
+44 error npm -v 1.1.45
+45 error path /Users/aholtgraver/Projects/NPI Device/npi-device-server/node_modules/node-static
+46 error code EISGIT
+47 verbose exit [ 1, true ]
