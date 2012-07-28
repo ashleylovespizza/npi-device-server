@@ -1,36 +1,28 @@
+// Load the TCP Library
+var net = require('net');
 
-var http = require ('http'),
-	sys  = require ('sys'),
-	nodeStatic = require('node-static/lib/node-static');
+var clients = [];
 
+var server = net.createServer(function(c) {
+	
+	console.log("Connected!");
+	clients.push(c);
 
-//var NPIListener = require('./lib/npilistener');
+	console.log(clients.length + " clients connected");
 
-var port = process.env.PORT || 8000;
-
-var server = http.createServer(function(request, response) {
-	var file = new nodeStatic.Server('./public', {
-		cache: false
+	c.on('end', function() {
+		console.log("Later sucker");
 	});
 
-	request.addListener('end', function() {
-		if (request.url == '/npitest.json' && request.method == 'GET') {
-			response.writeHead(200, {
-				'Content-Type': 'application/x-javascript'
-			});
-			var jsonString = JSON.stringify({
-				'print': 'No Pants Island: A Subsidiary of Flimshaw Industries & Do It Go LLC'
-			})
-			response.write(jsonString);
-			response.end();
-		} else {
-
-			file.serve(request,response);
+	c.on('data', function(data) {
+		console.log(data.toString());
+		for (i in clients) {
+			clients[i].write(data);
 		}
-	})
+	});
+
 });
 
-server.listen(port, function(){
-	
-  console.log("Listening on " + port);
+server.listen(3034, function() {
+	console.log("server started");
 });
