@@ -17,7 +17,9 @@ var server = net.createServer(function(c) {
 	c.on('data', function(data) {
 		console.log(data.toString());
 		for (i in clients) {
-			clients[i].write(data);
+			if (clients[i] != c) {
+				clients[i].write(data);
+			}
 		}
 	});
 
