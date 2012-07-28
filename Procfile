@@ -1,1 +1,1 @@
-web: node npi-server.js
+npi: node npi-server.js
