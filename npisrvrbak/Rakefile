@@ -1,0 +1,13 @@
+namespace :server do
+  task :start do |t, args|
+    puts "*** Starting server... ***"
+    system "coffee app.coffee"
+    puts "*** Done! ***"
+  end
+
+  task :coffee do |t, args|
+    puts "*** Starting coffeescript watcher ***"
+    system('coffee -o ./node_modules/npi_server -cw ./node_modules/npi_server')
+    puts "*** Done! ***"
+  end
+end
